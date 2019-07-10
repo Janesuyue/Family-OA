@@ -5,12 +5,6 @@ var Action = {
             text:msg
         }
     },
-    toHomeItem:function(msg){
-        return{
-            type:'toHome',
-            text:msg
-        }
-    }
 }
 
 export default Action

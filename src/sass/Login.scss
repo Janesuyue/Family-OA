@@ -12,7 +12,19 @@
             background-color: rgba(255,255,255,0.9);
             padding: 30px;
             box-sizing: border-box;
+            .ant-form-item-control {
+                .login-form {
+                  max-width: 300px;
+                } 
+                .login-form-forgot {
+                  float: right;
+                } 
+                .login-form-button {
+                  width: 100%;
+                }
+              }
         }
+        
     }
     
 }
