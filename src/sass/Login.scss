@@ -1,0 +1,18 @@
+.LoginBox {
+    width: 100vw;
+    height: 100vh;
+    background-image:url(../image/login1.jpg);
+    background-size: cover;
+    .ant-row-flex{
+        width: 100vw;
+        height: 100vh;
+        .LoginForm{
+            width: 360px;
+            height: 400px;
+            background-color: rgba(255,255,255,0.9);
+            padding: 30px;
+            box-sizing: border-box;
+        }
+    }
+    
+}
