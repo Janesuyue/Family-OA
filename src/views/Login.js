@@ -90,15 +90,9 @@ class NormalLoginForm extends Component{
                                 valuePropName: 'checked',
                                 initialValue: true,
                             })(<Checkbox>Remember me</Checkbox>)}
-                            {/* <a className="login-form-forgot" href="">
-                                Forgot password
-                            </a> */}
-                            Forgot password
-                            <Button type="primary" htmlType="submit" className="login-form-button">
-                                Log in
-                            </Button>
-                                {/* <a href="">register now!</a> */}
-                                register now!
+                                <Button type="primary" htmlType="submit" className="login-form-button">
+                                    Log in
+                                </Button>
                             </Form.Item>
                         </Form>
                     </Col>
