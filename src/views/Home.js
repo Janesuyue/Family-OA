@@ -9,15 +9,15 @@ import {
     message,
     Dropdown
 } from 'antd';
+// import Store from '../store/Store';
 import '../sass/Home.scss';
-
-import Admin from "./Admin";
-import User from "./User";
-import ProductList from "./ProductList";
-import AddProduct from "./AddProduct";
-import DelProduct from "./DelProduct";
-
-
+import Admin from "../components/Admin.jsx";
+import User from "../components/User.jsx";
+import AddUser from "../components/AddUser.jsx";
+import ProductList from "../components/ProductList.jsx";
+import AddProduct from "../components/AddProduct.jsx";
+import DelProduct from "../components/DelProduct.jsx";
+import UserDetail from "../components/User/UserDetail.jsx"
 import {
       BrowserRouter as Router,
       Route,
@@ -27,30 +27,49 @@ import {
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
-// 用户名 点击事件
-const onUserClick = ({ key }) => {
-    message.info(`Click on item ${key}`);
-};
 
-const menu = (
-    <Menu onClick={onUserClick}>
-      <Menu.Item key="1">个人信息</Menu.Item>
-      <Menu.Item key="2">用户管理</Menu.Item>
-      <Menu.Item key="3">退出登录</Menu.Item>
-    </Menu>
-);
-// 用户名 end
+
+
 export default class Home extends Component {
     state = {
         collapsed: false,
+        userName:'',
     };
     
     onCollapse = collapsed => {
-        console.log(collapsed);
+        // console.log(collapsed);
         this.setState({ collapsed });
     };
 
+    // 用户名下拉菜单
+    onUserClick = ({ key }) => {
+        
+        // 退出登录
+        if(key === '3'){
+            message.info('退出登录')
+            localStorage.removeItem('spaLogin');
+            this.props.history.push('/login')
+        }
+    };
+
+    componentDidMount(){
+        // 挂载完成之后将从localStorage中取出username
+        let token = JSON.parse(localStorage.getItem('spaLogin'))
+        this.setState({userName:token.username})
+    }
+
+
+
     render() {
+        // 用户名下拉菜单
+        const menu = (
+            <Menu onClick={this.onUserClick}>
+              <Menu.Item key="1">个人信息</Menu.Item>
+              <Menu.Item key="2">用户管理</Menu.Item>
+              <Menu.Item key="3">退出登录</Menu.Item>
+            </Menu>
+        );
+
         return (
             <div>
                 <Router>
@@ -67,9 +86,9 @@ export default class Home extends Component {
                                     </Col>
                                     <Col>
                                     <Dropdown overlay={menu}>
-                                        <a className="ant-dropdown-link" href="#">
-                                        Hover me<Icon type="down" />
-                                        </a>
+                                        <span style={{color:'#fff'}}>
+                                        {this.state.userName}<Icon type="down" />
+                                        </span>
                                     </Dropdown>
                                     </Col>
                                 </Row>
@@ -94,10 +113,13 @@ export default class Home extends Component {
                                 }
                             >
                                 <Menu.Item key="1">
-                                <NavLink to="/home/admin">管理员信息</NavLink>
+                                    <NavLink to="/home/admin">管理员信息</NavLink>
                                 </Menu.Item>
                                 <Menu.Item key="2">
-                                <NavLink to="/home/user">用户信息</NavLink>
+                                    <NavLink to="/home/user">用户信息</NavLink>
+                                </Menu.Item>
+                                <Menu.Item key="3">
+                                    <NavLink to="/home/addUser">新增用户</NavLink>
                                 </Menu.Item>
                             </SubMenu>
                             <SubMenu
@@ -153,18 +175,13 @@ export default class Home extends Component {
                             </Menu>
                         </Sider>
                         <Layout style={{ padding: "0 24px 24px" }}>
-                            <Content
-                            style={{
-                                background: "#fff",
-                                padding: 24,
-                                margin: 0,
-                                minHeight: 500
-                            }}
-                            >
+                            <Content className="HomeBox">
                             <div>
                                 <Route exact path="/home" component={Admin} />
                                 <Route path="/home/admin" component={Admin} />
                                 <Route path="/home/user" component={User} />
+                                <Route path="/home/adduser" component={AddUser} />
+                                <Route path="/home/user/userdetail" component={UserDetail} />
                                 <Route path="/home/productlist" component={ProductList} />
                                 <Route path="/home/addproduct" component={AddProduct} />
                                 <Route path="/home/delproduct" component={DelProduct} />
